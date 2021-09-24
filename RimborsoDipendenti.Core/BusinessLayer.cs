@@ -1,0 +1,135 @@
+﻿using RimborsoDipendenti.Core.Entities;
+using RimborsoDipendenti.Core.RepositoryInterface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RimborsoDipendenti.Core
+{
+    public class BusinessLayer : IBusinessLayer
+    {
+
+        private readonly IRepositorySpesa spesaRepo;
+        private readonly IRepositoryDipendente dipRepo;
+
+        public BusinessLayer(IRepositorySpesa repositorySpesa, IRepositoryDipendente dipendente)
+        {
+            spesaRepo = repositorySpesa;
+            dipRepo = dipendente;
+        }
+
+        public void RimborsiApp()
+        {
+            List<Spese> speseConIValoriMancanti = new List<Spese>();
+            speseConIValoriMancanti = spesaRepo.GetSpeseValoriMancanti();
+
+            if (speseConIValoriMancanti.Count() > 0)
+            {
+                foreach (var spesa in speseConIValoriMancanti)
+                {
+                    if (spesa.Spesa > 0 && spesa.Spesa < 2500)
+                    {
+                        spesa.Approvato = true;
+                    }
+
+                    if (spesa.Spesa <= 400)
+                    {
+                        spesa.Approvatore = Spese.ApprovatoreE.Manager;
+                        if (spesa.Categoria == Spese.CategoriaE.Vitto)
+                        {
+                            var rimborso = spesa.Spesa * 70 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Alloggio)
+                        {
+                            var rimborso = spesa.Spesa * 100 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Trasferta)
+                        {
+                            var rimborso = spesa.Spesa * 50 / 100 + 50;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Altro)
+                        {
+                            var rimborso = spesa.Spesa * 10 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+
+
+                    }
+                    else if (spesa.Spesa > 401 && spesa.Spesa < 1000)
+                    {
+                        spesa.Approvatore = Spese.ApprovatoreE.Operation_Manager;
+                        if (spesa.Categoria == Spese.CategoriaE.Vitto)
+                        {
+                            var rimborso = spesa.Spesa * 70 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Alloggio)
+                        {
+                            var rimborso = spesa.Spesa * 100 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Trasferta)
+                        {
+                            var rimborso = spesa.Spesa * 50 / 100 + 50;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Altro)
+                        {
+                            var rimborso = spesa.Spesa * 10 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+
+                    }
+                    else if (spesa.Spesa >= 1000)
+                    {
+                        spesa.Approvatore = Spese.ApprovatoreE.CEO;
+                        if (spesa.Categoria == Spese.CategoriaE.Vitto)
+                        {
+                            var rimborso = spesa.Spesa * 70 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Alloggio)
+                        {
+                            var rimborso = spesa.Spesa * 100 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Trasferta)
+                        {
+                            var rimborso = spesa.Spesa * 50 / 100 + 50;
+                            spesa.Rimborso = rimborso;
+                        }
+                        else if (spesa.Categoria == Spese.CategoriaE.Altro)
+                        {
+                            var rimborso = spesa.Spesa * 10 / 100;
+                            spesa.Rimborso = rimborso;
+                        }
+                    }
+                    else if (spesa.Spesa > 2500) // TODO non funziona bene
+                    {
+                        var rimborso = spesa.Approvato;
+                        rimborso = false;
+                        if (rimborso == false)
+                        {
+                            spesaRepo.UpdateRimborso1(spesa);
+                        }
+                        
+                    }
+                    spesaRepo.UpdateRimborso(spesa);
+                }
+            }
+        }
+
+        List<Dipendente> IBusinessLayer.ExistNameInDb(string nome)
+        {
+            var dipendeni = dipRepo.FetchAll();
+            return dipendeni;
+
+            //TODO torno lista dei dipendenti e faccio la stampa sull file
+        }
+    }
+}

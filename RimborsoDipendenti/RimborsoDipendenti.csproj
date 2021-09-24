@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RimborsoDipendenti.AdoRepository\RimborsoDipendenti.AdoRepository.csproj" />
+    <ProjectReference Include="..\RimborsoDipendenti.Core\RimborsoDipendenti.Core.csproj" />
+  </ItemGroup>
+
+</Project>
