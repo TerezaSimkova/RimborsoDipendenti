@@ -27,7 +27,7 @@ namespace RimborsoDipendenti
         // value type invece contiene diretamente valore nello stack
 
         //2.
-        //
+        // string,enum,object,tupla,funzioni,int,DateTime,struct,interface,delegate ecc..
 
         //3. 
         //.NET core è runtime, viene usato per creare delle app su mobile o web app oppure store su windows
