@@ -22,15 +22,22 @@ namespace RimborsoDipendenti.Login
             var nomeList = bl.ExistNameInDb(nome);
 
             //aggiungere delegate + una join di dipendente e spese per poter fare la stampa
-            if (nome != null)
-            {
-                string path = @"C:\Users\tereza.simkova\source\repos\RimborsoDipendenti\RimborsoDipendenti\Riepiologo.txt";
 
-                using (StreamWriter sw = new StreamWriter(path))
+            foreach (var item in nomeList)
+            {
+                if (item.Nome == nome)
                 {
-                    sw.WriteLine();
+                    string path = @"C:\Users\tereza.simkova\source\repos\RimborsoDipendenti\RimborsoDipendenti\Riepiologo.txt";
+
+                    using (StreamWriter sw = new StreamWriter(path))
+                    {
+                        sw.WriteLine();
+                    }
                 }
+               
             }
+           
+
         }
     }
 }

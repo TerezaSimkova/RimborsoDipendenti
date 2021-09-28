@@ -12,9 +12,9 @@ namespace RimborsoDipendenti.Core.Entities
         public DateTime Data { get; set; } 
         public float Spesa { get; set; }
         public CategoriaE Categoria { get; set; }
-        public bool Approvato { get; set; }
-        public float Rimborso { get; set; }
-        public ApprovatoreE Approvatore { get; set; }
+        public bool? Approvato { get; set; }
+        public float? Rimborso { get; set; }
+        public ApprovatoreE? Approvatore { get; set; }
 
 
         public Spese() { }

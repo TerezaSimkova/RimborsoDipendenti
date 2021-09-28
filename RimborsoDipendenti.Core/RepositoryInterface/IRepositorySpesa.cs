@@ -11,7 +11,6 @@ namespace RimborsoDipendenti.Core.RepositoryInterface
     {
         List<Spese> GetSpeseValoriMancanti();
         public void UpdateRimborso(Spese rimborso);
-        void UpdateRimborso1(Spese spesa);
 
     }
 }

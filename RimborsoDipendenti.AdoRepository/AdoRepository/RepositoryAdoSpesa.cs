@@ -53,32 +53,12 @@ namespace RimborsoDipendenti.AdoRepository
                 command.Connection = connection;
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = "update dbo.Spese set Approvata = @approvata, Rimborso = @rimborso, Approvatore = @approva where Id = @id";
-             
-                command.Parameters.AddWithValue("@approvata", rimborso.Approvato);
+
                 command.Parameters.AddWithValue("@id", rimborso.Id);
-                command.Parameters.AddWithValue("@rimborso", rimborso.Rimborso);
-                command.Parameters.AddWithValue("@approva", rimborso.Approvatore);
-
-               
-
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public void UpdateRimborso1(Spese spesa)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand();
-                command.Connection = connection;
-                command.CommandType = System.Data.CommandType.Text;
-                command.CommandText = "update dbo.Spese set Approvata = @approvata, Rimborso = @rimborso, Approvatore = @approva where Id = @id";
-                command.Parameters.AddWithValue("@approvata", DBNull.Value); //TODO questa parte e da eggiustare non funziona
-                command.Parameters.AddWithValue("@id", DBNull.Value);
-                command.Parameters.AddWithValue("@approva", DBNull.Value);
-                command.Parameters.AddWithValue("@rimborso", DBNull.Value);
-                command.Parameters.AddWithValue("@approva", DBNull.Value); 
+                
+                command.Parameters.AddWithValue("@approvata", rimborso.Approvato == null ? DBNull.Value : rimborso.Approvato);  
+                command.Parameters.AddWithValue("@rimborso", rimborso.Rimborso == null ? DBNull.Value : rimborso.Approvato);
+                command.Parameters.AddWithValue("@approva", rimborso.Approvatore == null ? DBNull.Value : rimborso.Approvato);              
 
                 command.ExecuteNonQuery();
             }

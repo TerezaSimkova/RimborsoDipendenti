@@ -25,6 +25,7 @@ namespace RimborsoDipendenti.AdoRepository.AdoRepository
                 command.CommandText = "select * from dbo.Dipendenti";
 
                 SqlDataReader reader = command.ExecuteReader();
+
                 List<Dipendente> iDip = new List<Dipendente>();
 
                 while (reader.Read())

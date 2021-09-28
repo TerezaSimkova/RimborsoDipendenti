@@ -34,91 +34,38 @@ namespace RimborsoDipendenti.Core
                         spesa.Approvato = true;
                     }
 
-                    if (spesa.Spesa <= 400)
-                    {
-                        spesa.Approvatore = Spese.ApprovatoreE.Manager;
-                        if (spesa.Categoria == Spese.CategoriaE.Vitto)
-                        {
-                            var rimborso = spesa.Spesa * 70 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Alloggio)
-                        {
-                            var rimborso = spesa.Spesa * 100 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Trasferta)
-                        {
-                            var rimborso = spesa.Spesa * 50 / 100 + 50;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Altro)
-                        {
-                            var rimborso = spesa.Spesa * 10 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
 
+                    if (spesa.Spesa <= 400) spesa.Approvatore = Spese.ApprovatoreE.Manager;
 
-                    }
-                    else if (spesa.Spesa > 401 && spesa.Spesa < 1000)
-                    {
-                        spesa.Approvatore = Spese.ApprovatoreE.Operation_Manager;
-                        if (spesa.Categoria == Spese.CategoriaE.Vitto)
-                        {
-                            var rimborso = spesa.Spesa * 70 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Alloggio)
-                        {
-                            var rimborso = spesa.Spesa * 100 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Trasferta)
-                        {
-                            var rimborso = spesa.Spesa * 50 / 100 + 50;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Altro)
-                        {
-                            var rimborso = spesa.Spesa * 10 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
+                    else if (spesa.Spesa > 401 && spesa.Spesa < 1000) spesa.Approvatore = Spese.ApprovatoreE.Operation_Manager;
 
-                    }
-                    else if (spesa.Spesa >= 1000)
+                    else if (spesa.Spesa >= 1000 && spesa.Spesa < 2500) spesa.Approvatore = Spese.ApprovatoreE.CEO;
+
+                    else if (spesa.Spesa > 2500)
                     {
-                        spesa.Approvatore = Spese.ApprovatoreE.CEO;
-                        if (spesa.Categoria == Spese.CategoriaE.Vitto)
-                        {
-                            var rimborso = spesa.Spesa * 70 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Alloggio)
-                        {
-                            var rimborso = spesa.Spesa * 100 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Trasferta)
-                        {
-                            var rimborso = spesa.Spesa * 50 / 100 + 50;
-                            spesa.Rimborso = rimborso;
-                        }
-                        else if (spesa.Categoria == Spese.CategoriaE.Altro)
-                        {
-                            var rimborso = spesa.Spesa * 10 / 100;
-                            spesa.Rimborso = rimborso;
-                        }
+                        spesaRepo.UpdateRimborso(spesa);
+                        continue;
                     }
-                    else if (spesa.Spesa > 2500) // TODO non funziona bene
+
+                    float rimborso = 0;
+                    if (spesa.Categoria == Spese.CategoriaE.Vitto)
                     {
-                        var rimborso = spesa.Approvato;
-                        rimborso = false;
-                        if (rimborso == false)
-                        {
-                            spesaRepo.UpdateRimborso1(spesa);
-                        }
-                        
+                        rimborso = spesa.Spesa * 70 / 100;
                     }
+                    else if (spesa.Categoria == Spese.CategoriaE.Alloggio)
+                    {
+                        rimborso = spesa.Spesa * 100 / 100;
+                    }
+                    else if (spesa.Categoria == Spese.CategoriaE.Trasferta)
+                    {
+                        rimborso = spesa.Spesa * 50 / 100 + 50;
+                    }
+                    else if (spesa.Categoria == Spese.CategoriaE.Altro)
+                    {
+                        rimborso = spesa.Spesa * 10 / 100;
+                    }
+
+                    spesa.Rimborso = rimborso;
                     spesaRepo.UpdateRimborso(spesa);
                 }
             }

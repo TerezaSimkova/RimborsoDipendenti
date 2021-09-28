@@ -16,9 +16,11 @@ namespace RimborsoDipendenti
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message, ex.InnerException.Source);
             }
-
+                
+            
+         
         }
         //Rosposte parte 1:
 
